@@ -1,3 +1,9 @@
-h1 {
-	color: darkred;
+body {
+	text-align: center;
+	font-family: sans-serif;
+}
+
+/* This is for fuel quote page -Daniel */
+input[type=number]{
+	border-radius: 3px;
 }
