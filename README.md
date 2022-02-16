@@ -2,6 +2,6 @@
 
 | Member | Contributions | Notes
 |---|---|---|
-| Daniel Berreles Mendoza | Form Quote Page | abcdefg |
+| Daniel Berreles Mendoza | Fuel Quote Page | abcdefg |
 | Romaine Lewis | placeholder | placeholder 
 | Tyonne Zachery | placeholder | placeholder
