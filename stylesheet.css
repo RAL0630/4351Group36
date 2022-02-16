@@ -42,3 +42,22 @@ label {
 	font-size: 18px;
 	margin: .7em;
 }
+
+/* This is for the table in Fuel Quote History page */
+tr:nth-child(even) { background: lightgray; }
+
+th { 
+	background: black;
+	color: white;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
