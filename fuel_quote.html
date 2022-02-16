@@ -7,30 +7,33 @@
 	<title>Fuel Quote</title>
 </head>
 <body>
-	<h1> This will be the fuel quote page </h1>
-	<div id="fuel_quote">
-		<form id="fuel_quote_form">
-			<div id='field_container'>
-				<input type="number" name="gallons_requested" placeholder="Gallons Requested">
-			</div>
-			<div id='field_container'>
-				<p>Delivery Address Here</p>
-			</div>
-			<div id="field_container">
-				<input type="date" name="delivery_date" placeholder="Delivery Date">
-			</div>
-			<button id="fuel_quote_submit_button">
-				<span class="button_text">Submit</span>
-			</button>
-			<p>Suggested Price / gallon</p>
-			<div id="field_container">
-				<p>Suggested Price / gallon</p>
-			</div>
-			<p>Total Amount Due</p>
-			<div id="field_container">
-				<p>Total Amount Due</p>
-			</div>
-		</form>
-	</div>
+	<h1> Fuel Quote Form  </h1>
+	<form id="fuel_quote" action="" method="post">
+		<ul id="fuel_quote_ul">
+			<li class="list_item">
+				<label for="fuel_quote_gallons">Gallons:<span style="color:red">*</span></label>
+				<input type="number" name="fuel_quote_gallons" id="fuel_quote_gallons">
+			</li>
+			<li class="list_item">
+				<label for="fuel_quote_address">Delivery Address:</label>
+				<textarea readonly id="fuel_quote_address" name="fuel_quote_address"></textarea>
+			</li>
+			<li class="list_item">
+				<label for="fuel_quote_date">Delivery date<span style="color:red">*</span></label>
+				<input type="date" name="fuel_quote_date" id="fuel_quote_date">
+			</li>
+			<li class="list_item">
+				<button name="fuel_quote_button" id="fuel_quote_button">Submit</button>
+			</li>
+			<li class="list_item">
+				<label for="fuel_quote_suggested">Suggested Price:</label>
+				<textarea readonly id="fuel_quote_suggested" name="fuel_quote_suggested"></textarea>
+			</li>
+			<li class="list_item">
+				<label for="fuel_quote_total">Total Due:</label>
+				<textarea readonly id="fuel_quote_total" name="fuel_quote_total"></textarea>
+			</li>
+		</ul>
+	</form>
 </body>
 </html>

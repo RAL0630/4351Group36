@@ -4,6 +4,41 @@ body {
 }
 
 /* This is for fuel quote page -Daniel */
-input[type=number]{
-	border-radius: 3px;
+#fuel_quote {
+	margin: 0 auto;
+	width: 450px;
+	padding: 1em;
+	border: 1px solid #ccc;
+	border-radius: 1em;
+}
+
+#fuel_quote_ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.list_item {
+	margin: 1em 0 0 0;
+}
+
+label {
+	display: inline-block;
+	width: 120px;
+	text-align: left;
+}
+
+#fuel_quote_address,
+#fuel_quote_suggested,
+#fuel_quote_total {
+	resize: none;
+	vertical-align: top;
+}
+
+#fuel_quote_button {
+	width: 100px;
+	height: 50px;
+	border-radius: 30px;
+	font-size: 18px;
+	margin: .7em;
 }
