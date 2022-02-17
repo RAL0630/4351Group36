@@ -9,7 +9,7 @@ Answer these questions:
 | Member | Contributions | Notes |
 |---|---|---|
 | Daniel Berreles Mendoza | Fuel Quote Page, Fuel Quote History Page | Our original plan to use incremental development has been working well, and design has not changed much. |
-| Romaine Lewis | Login Page | Our plan for incremental programming has been smooth and our design is coming together. |
+| Romaine Lewis | Login Page, Client Registration Page | Our plan for incremental programming has been smooth and our design is coming together. |
 | Tyonne Zachery | placeholder | placeholder |
 
 For our front end technology we aare using HTML and CSS because they are very flexible and reliable.
