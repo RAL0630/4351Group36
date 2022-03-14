@@ -4,7 +4,9 @@ Answer these questions:
 1. Provide link to GitHub repository for TAs to view the code? (1 point)
 2. List what backend technologies you are using and why? (2 points)
 
-We are using XAMPP(MySql) to run our backend because it allows us to create and store all our information we need in databases fairly easily.
+We are using XAMPP(MySql) to run our backend because it allows us to create and store all our information we need in databases fairly easily. 
+For our code coverage, we used PHPUnit, a test framework, and a [library](https://github.com/sebastianbergmann/php-code-coverage 
+) that allows for code coverage functionality. 
 
 | Member | Contributions | Notes |
 |---|---|---|
