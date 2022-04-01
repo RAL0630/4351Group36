@@ -8,22 +8,44 @@
 </head>
 <body>
     <?php
-    // Attempt to connect to database FuelQuote
+	//Initialize variables
+    $userID = "1"; 
+	$style = "style='display:hidden;'";
+	// Check if user is logged in
+	session_start();
+	if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+		// logged in 
+		$userID = $_SESSION['username'];
+	} else {
+		$style = "style='background-color:red;'";
+	}
 	
-
+    // Attempt to connect to database FuelQuote
 	$connection = new mysqli("localhost", "root", "", "FuelQuote");
-	// check 
+
+	// check  connection 
 	if ($connection->connect_error){
 		die("Connection failed: " . $connection->connect_error);
 	} 
 	
-    //Initialize variables
-    $userID = "";
+	$sql = "SELECT UserID, Gallons, DeliveryAddress, DeliveryDate, SuggestedPrice, Total FROM FuelQuoteTable";
+	$result = $connection->query($sql);
+	
+	// Go through all rows in table
+	if ($result->num_rows > 0) {
+		// output all rows
+		while ($row = $result->fetch_assoc()) {
+			if ($row['UserID'] == $userID) {
+			
+			}
+		}
+	} else {
+		echo "empty table";
+	}
+
 
     // WILL USE SESSIONS TO LOGIN 
 	
-	// work on this later
-	$style = "color:red;";
     ?>
 	<h1> Fuel Quote History </h1>
 
