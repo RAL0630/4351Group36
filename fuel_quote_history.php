@@ -8,18 +8,26 @@
 </head>
 <body>
     <?php
-    //Include Config File
-    require_once "config.php";
+    // Attempt to connect to database FuelQuote
+	
 
+	$connection = new mysqli("localhost", "root", "", "FuelQuote");
+	// check 
+	if ($connection->connect_error){
+		die("Connection failed: " . $connection->connect_error);
+	} 
+	
     //Initialize variables
     $userID = "";
 
     // WILL USE SESSIONS TO LOGIN 
-
+	
+	// work on this later
+	$style = "color:red;";
     ?>
 	<h1> Fuel Quote History </h1>
 
-    <h2> You are not logged in. <a href="login.php">Login now.</a></h2>
+    <h2 <?php echo $style;?>> You are not logged in. <a href="index.html">Login now.</a></h2>
 
 	<table>
 		<tr>
