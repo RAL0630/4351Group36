@@ -9,10 +9,16 @@
 <body>
 	<h1> Fuel Quote Form  </h1>
 	<?php
+        // Attempt to connect to database FuelQuote
+        $connection = new mysqli("localhost", "root", "", "FuelQuote");
+        // check 
+        if ($connection == FALSE){
+            die("Connection failed: " . $connection->connect_error);
+        }
+
         // validate user input here
         $gallons = $delivery_address = $date = $suggested = $total = "";
         $gallonsError = $dateError = "";
-
         // VALIDATE INPUT
         // Validate Gallons, and Date
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -50,7 +56,8 @@
             $data = htmlspecialchars($data);
             return $data;
           }
-
+        
+        
 
 	?>
 
