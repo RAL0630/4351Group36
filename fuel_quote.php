@@ -9,16 +9,33 @@
 <body>
 	<h1> Fuel Quote Form  </h1>
 	<?php
+        //Check if user is logged in
+        $userID = "1"; // TODO : This is for testing
+        $style = "style='display:hidden;'";
+        $gallons = $delivery_address = $date = $suggested = $total = "";
+        $gallonsError = $dateError = "";
+        session_start();
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true) {
+            //  logged in 
+            $userID = $_SESSION['username'];
+        } else {
+            $style = "style='background-color:red;'";
+            // Everything should be in here, for testing its not. 
+        }
+
         // Attempt to connect to database FuelQuote
         $connection = new mysqli("localhost", "root", "", "FuelQuote");
-        // check 
         if ($connection == FALSE){
             die("Connection failed: " . $connection->connect_error);
         }
-
-        // validate user input here
-        $gallons = $delivery_address = $date = $suggested = $total = "";
-        $gallonsError = $dateError = "";
+        
+        // HARDCODED  Suggested Price, and Total Price
+        $sql = "SELECT DeliveryAddress FROM FuelQuoteTable";
+        $result = $connection->query($sql);
+        $delivery_address = $result->fetch_assoc()['DeliveryAddress'];
+        $suggested = 3.43; // TODO Calculate in final part
+        $total = intval($gallons) * $suggested;
+        
         // VALIDATE INPUT
         // Validate Gallons, and Date
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -45,10 +62,7 @@
             }
         }   
         
-        // Hardcode Delivery Address, Suggested Price, and Total Price
-        $delivery_address = "4401 Cougar Village Drive, Houston, Texas";
-        $suggested = 3.43;
-        $total = intval($gallons) * $suggested;
+
 
         function test_input($data) {
             $data = trim($data);
@@ -61,7 +75,7 @@
 
 	?>
 
-
+    <h2 <?php echo $style;?>>You are not logged in</h2>
 	<form id="fuel_quote" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 		<ul id="fuel_quote_ul">
 			<li class="list_item">
@@ -75,11 +89,8 @@
                 <span style="color:red" class="error">* <br></br><?php echo $dateError;?></span>
 			</li>
 			<li class="list_item">
-				<input type="submit" name="fuel_quote_button" id="fuel_quote_button"></input>
-			</li>
-			<li class="list_item">
 				<label for="fuel_quote_address">Delivery Address:</label>
-				<textarea readonly id="fuel_quote_address" name="fuel_quote_address"  value="<?php echo $delivery_address;?>"></textarea>
+				<textarea readonly id="fuel_quote_address" name="fuel_quote_address" ><?php echo $delivery_address;?></textarea>
 			</li>
 			<li class="list_item">
 				<label for="fuel_quote_suggested">Suggested Price:</label>
@@ -88,6 +99,9 @@
 			<li class="list_item">
 				<label for="fuel_quote_total">Total Due:</label>
 				<textarea readonly id="fuel_quote_total" name="fuel_quote_total" value="<?php echo $total;?>"></textarea>
+			</li>
+			<li class="list_item">
+				<input type="submit" name="fuel_quote_button" id="fuel_quote_button"></input>
 			</li>
 		</ul>
 	</form>
