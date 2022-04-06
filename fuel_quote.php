@@ -33,8 +33,6 @@
         $sql = "SELECT DeliveryAddress FROM FuelQuoteTable";
         $result = $connection->query($sql);
         $delivery_address = $result->fetch_assoc()['DeliveryAddress'];
-        $suggested = 3.43; // TODO Calculate in final part
-        $total = intval($gallons) * $suggested;
         
         // VALIDATE INPUT
         // Validate Gallons, and Date
@@ -88,13 +86,20 @@
 				<input type="date" name="fuel_quote_date" value="<?php echo $date;?>" id="fuel_quote_date" min="<?php echo date("Y-m-d");?>">
                 <span style="color:red" class="error">* <br></br><?php echo $dateError;?></span>
 			</li>
+            <?php
+            if (isset($_GET['fuel_quote_gallons']) && isset($_GET['fuel_quote_date'])) {
+                echo "Both are set";
+                $suggested = 3.43; // TODO Calculate in final part
+                $total = intval($gallons) * $suggested;
+            }
+            ?>
 			<li class="list_item">
 				<label for="fuel_quote_address">Delivery Address:</label>
 				<textarea readonly id="fuel_quote_address" name="fuel_quote_address" ><?php echo $delivery_address;?></textarea>
 			</li>
 			<li class="list_item">
 				<label for="fuel_quote_suggested">Suggested Price:</label>
-				<textarea readonly id="fuel_quote_suggested" name="fuel_quote_suggested" value="<?php echo $suggested;?>" ></textarea>
+				<textarea readonly id="fuel_quote_suggested" name="fuel_quote_suggested" ><?php echo $suggested;?></textarea>
 			</li>
 			<li class="list_item">
 				<label for="fuel_quote_total">Total Due:</label>

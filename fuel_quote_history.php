@@ -9,7 +9,7 @@
 <body>
     <?php
 	//Initialize variables
-    $userID = "1"; 
+    $userID = "1"; // TODO This is for testing  
 	$style = "style='display:hidden;'";
 	// Check if user is logged in
 	session_start();
