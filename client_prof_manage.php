@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Check input errors before inserting in database
     // Prepare an insert statement
-    $sql = "INSERT INTO users (name, address1, address2, city, state, zipcode) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "UPDATE users SET name = ?, address1= ?, address2= ?, city= ?, state= ?, zipcode= ? WHERE id=1;" ;
          
     if($stmt = mysqli_prepare($link, $sql)){
         
@@ -19,12 +19,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         mysqli_stmt_bind_param($stmt, "ssssss", $param_name, $param_address1, $param_address2, $param_city, $param_state, $param_zipcode);
             
         // Set parameters
-        $param_name = $name;
-		$param_address1 = $address1;
-		$param_address2 = $address2;
-		$param_city = $city;
-		$param_state = $state;
-		$param_zipcode = $zipcode;
+        $param_name = trim($_POST["name"]);;
+		$param_address1 = trim($_POST["address1"]);;
+		$param_address2 = trim($_POST["address2"]);;
+		$param_city = trim($_POST["city"]);;
+		$param_state = trim($_POST["state"]);;
+		$param_zipcode = trim($_POST["zipcode"]);;
             
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
