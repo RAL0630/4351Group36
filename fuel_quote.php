@@ -7,7 +7,7 @@
 	<title>Fuel Quote</title>
 </head>
 <body>
-	<h1> Fuel Quote Form  </h1>
+	<h1> Fuel Quote Form Bruh  </h1>
 	<?php
         //Check if user is logged in
         $userID = "1"; // TODO : This is for testing
