@@ -7,67 +7,49 @@
 	<title>Fuel Quote History</title>
 </head>
 <body>
-    <?php
-	//Initialize variables
-    $userID = "1"; // TODO This is for testing  
-	$style = "style='display:hidden;'";
-	// Check if user is logged in
-	session_start();
-	if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-		// logged in 
-		$userID = $_SESSION['username'];
-	} else {
-		$style = "style='background-color:red;'";
-	}
-	
-    // WILL USE SESSIONS TO LOGIN 
-	
-    ?>
-	<h1> Fuel Quote History </h1>
+<?php
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'login_test');
+ 
+/* Attempt to connect to MySQL database */
+$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+ 
+// Check connection
+if($link === false){
+    die("ERROR: Could not connect. " . mysqli_connect_error());
+}
+// Check connection
 
-    <h2 <?php echo $style;?>> You are not logged in. <a href="index.html">Login now.</a></h2>
 
-	<?php
+$result = mysqli_query($link,"SELECT gallons_requested, delivery_address, delivery_date, price, total FROM fuel");
 
-    // Attempt to connect to database FuelQuote
-	$connection = new mysqli("localhost", "root", "", "FuelQuote");
+echo "<table border='10'>
+<tr>
+<th>Gallons Requested</th>
+<th>Delivery Address</th>
+<th>Delivery Date</th>
+<th>Price</th>
+<th>Total</th>
+</tr>";
 
-	// check  connection 
-	if ($connection->connect_error){
-		die("Connection failed: " . $connection->connect_error);
-	} 
-	
-	$sql = "SELECT UserID, Gallons, DeliveryAddress, DeliveryDate, SuggestedPrice, Total FROM FuelQuoteTable";
-	$result = $connection->query($sql);
+while($row = mysqli_fetch_array($result))
+{
+echo "<tr>";
+echo "<td>" . $row['gallons_requested'] . "</td>";
+echo "<td>" . $row['delivery_address'] . "</td>";
+echo "<td>" . $row['delivery_date'] . "</td>";
+echo "<td>" . $row['price'] . "</td>";
+echo "<td>" . $row['total'] . "</td>";
+echo "</tr>";
+}
+echo "</table>";
 
-	echo "
-	<table>
-		<tr>
-			<th> Gallons Requested </th>
-			<th> Delivery Address </th>
-			<th> Delivery Date </th>
-			<th> Suggested Price / gallon </th>
-			<th> Total Amount </th>
-		</tr>";
+mysqli_close($link);
 
-	// Go through all rows in table
-	if ($result->num_rows > 0) {
-		// output all rows
-		while ($row = $result->fetch_assoc()) {
-			if ($row['UserID'] == $userID) {
-				echo "<tr>";
-				echo "<td>" . $row['Gallons'] . "</td>";
-				echo "<td>" . $row['DeliveryAddress'] . "</td>";
-				echo "<td>" . $row['DeliveryDate'] . "</td>";
-				echo "<td>" . $row['SuggestedPrice'] . "</td>";
-				echo "<td>" . $row['Total'] . "</td>";
-			}
-		}
-	} else {
-		echo "NOT LOGGED IN";
-	}
-
-	?>
+?>
 
 </body>
+<a href="welcome.php" class="btn btn-warning">Home</a>
 </html>
