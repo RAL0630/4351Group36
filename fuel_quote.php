@@ -1,114 +1,76 @@
 <!DOCTYPE html>
-<html>
+
+
+<?php
+// Include config file
+require_once "config.php";
+ 
+// Define variables and initialize with empty values
+$gallons_requested = $delivery_address = $delivery_date = $price = $total  = "";
+ 
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+    // Check input errors before inserting in database
+    // Prepare an insert statement
+    $sql = "INSERT INTO fuel (gallons_requested, delivery_address, delivery_date, price , total) VALUES (?,?,?,?,?) ";
+         
+    if($stmt = mysqli_prepare($link, $sql)){
+        
+// Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "sssss", $param_gallons_requested, $param_delivery_address, $param_delivery_date, $param_price, $param_total);
+            
+        // Set parameters
+        $param_gallons_requested = trim($_POST["gallons_requested"]);;
+		$param_delivery_address = trim($_POST["delivery_address"]);;
+		$param_delivery_date = trim($_POST["delivery_date"]);;
+		$param_price = trim($_POST["price"]);;
+		$param_total = trim($_POST["total"]);;
+            
+        // Attempt to execute the prepared statement
+        if(mysqli_stmt_execute($stmt)){
+            // Redirect to welcome page
+            header("location: welcome.php");
+        } else{
+             echo "Oops! Something went wrong. Please try again later.";
+        }
+
+        // Close statement
+        mysqli_stmt_close($stmt);
+    }
+    
+    // Close connection
+    mysqli_close($link);
+}
+?>
+
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="stylesheet.css">
-	<title>Fuel Quote</title>
+	<title> Fuel Order Page </title>
 </head>
 <body>
-	<h1> Fuel Quote Form Bruh  </h1>
-	<?php
-        //Check if user is logged in
-        $userID = "1"; // TODO : This is for testing
-        $style = "style='display:hidden;'";
-        $gallons = $delivery_address = $date = $suggested = $total = "";
-        $gallonsError = $dateError = "";
-        session_start();
-        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true) {
-            //  logged in 
-            $userID = $_SESSION['username'];
-        } else {
-            $style = "style='background-color:red;'";
-            // Everything should be in here, for testing its not. 
-        }
-
-        // Attempt to connect to database FuelQuote
-        $connection = new mysqli("localhost", "root", "", "FuelQuote");
-        if ($connection == FALSE){
-            die("Connection failed: " . $connection->connect_error);
-        }
-        
-        // HARDCODED  Suggested Price, and Total Price
-        $sql = "SELECT DeliveryAddress FROM FuelQuoteTable";
-        $result = $connection->query($sql);
-        $delivery_address = $result->fetch_assoc()['DeliveryAddress'];
-        
-        // VALIDATE INPUT
-        // Validate Gallons, and Date
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Make sure gallons contains a number, validation is done in the HTML code for the input
-            // including min=1 and max=99999
-            if (empty($_POST["fuel_quote_gallons"])) {
-                $gallonsError = "Gallons is a required input field";
-            } else {
-                $gallons = test_input($_POST["fuel_quote_gallons"]);
-            }
-            if (empty($_POST["fuel_quote_date"])) {
-                $dateError = "Date is a required input field";
-            } else {
-                // Date does was input, now this code validates the date.
-                //      Minimum is already set iin the property tags
-                //      So only thing to do here is to check its not too far ahead (10 years)
-                $test_date = explode('-',  test_input($_POST["fuel_quote_date"]));
-                $current_date = explode('-', date("Y-m-d"));
-                if (intval($test_date[0]) > intval($current_date[0])+10) {
-                    $dateError = "Cannot exceed 10 years from now."; // MAX delivery date is 10 years
-                } else {
-                    $data = $test_date;
-                }
-            }
-        }   
-        
-
-
-        function test_input($data) {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-          }
-        
-        
-
-	?>
-
-    <h2 <?php echo $style;?>>You are not logged in</h2>
-	<form id="fuel_quote" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-		<ul id="fuel_quote_ul">
-			<li class="list_item">
-				<label for="fuel_quote_gallons">Gallons:</label>
-				<input type="number" name="fuel_quote_gallons" id="fuel_quote_gallons" value="<?php echo $gallons;?>" min="1" max="99999">
-                <span style="color:red" class="error">* <br></br><?php echo $gallonsError;?></span>
-			</li>
-			<li class="list_item">
-				<label for="fuel_quote_date">Delivery date</label>
-				<input type="date" name="fuel_quote_date" value="<?php echo $date;?>" id="fuel_quote_date" min="<?php echo date("Y-m-d");?>">
-                <span style="color:red" class="error">* <br></br><?php echo $dateError;?></span>
-			</li>
-            <?php
-            if (isset($_GET['fuel_quote_gallons']) && isset($_GET['fuel_quote_date'])) {
-                echo "Both are set";
-                $suggested = 3.43; // TODO Calculate in final part
-                $total = intval($gallons) * $suggested;
-            }
-            ?>
-			<li class="list_item">
-				<label for="fuel_quote_address">Delivery Address:</label>
-				<textarea readonly id="fuel_quote_address" name="fuel_quote_address" ><?php echo $delivery_address;?></textarea>
-			</li>
-			<li class="list_item">
-				<label for="fuel_quote_suggested">Suggested Price:</label>
-				<textarea readonly id="fuel_quote_suggested" name="fuel_quote_suggested" ><?php echo $suggested;?></textarea>
-			</li>
-			<li class="list_item">
-				<label for="fuel_quote_total">Total Due:</label>
-				<textarea readonly id="fuel_quote_total" name="fuel_quote_total" value="<?php echo $total;?>"></textarea>
-			</li>
-			<li class="list_item">
-				<input type="submit" name="fuel_quote_button" id="fuel_quote_button"></input>
-			</li>
-		</ul>
-	</form>
+	<center>
+		<h1>Ordering Page</h1> <br>
+		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+			
+			<label for="gallons_requested">Numbe of Gallons:</label><br>
+			<input type="int" id="gallons_requested" name="gallons_requested" value="" maxlength="" required><br><br>
+			
+			<label for="delivery_address"> Delivery Address:</label><br>
+			<input type="text" id="delivery_address" name="delivery_address" value="" maxlength="100" required><br><br>
+  
+			<label for="delivery_date">Delivery Date:</label><br>
+			<input type="date" id="delivery_date" name="delivery_date" value="" maxlength="100" ><br><br>
+  
+			<label for="price">Price:</label><br>
+			<input type="int" id="price" name="price" value="" maxlength="100" required><br><br>
+			
+			<label for="total">Total:</label><br>
+			<input type="int" id="total" name="total" value="" maxlength="" required><br><br>
+			<br><br>
+  
+			<input type="submit" value="Submit">
+		</form>
+	</center>
 </body>
 </html>
