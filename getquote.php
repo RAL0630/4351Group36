@@ -40,13 +40,16 @@
     $suggested_price = $current_price + $margin;
     $total = $suggested_price * $gallons_requested;
     
+    // Return Results
+    echo "<label>Suggested Price:</label><br>";
+    echo "<span>$</span><input readonly value='" . $suggested_price . "' name='price'";
+    echo "<br><br><br>";
+    
+    echo "<label>Total Price:</label><br>";
+    echo "<span>$</span><input readonly value='" . $total . "' name='total'";
+    echo "<br><br><br>";
+    
 
-    //echo date('d/M/Y', $delivery_date) . "<br><br>";
-    echo "$" . $suggested_price . "<br><br>";
-    echo "<label>" . "Total Price:" . "</label><br>";
-    echo $total . "<br><br>";
-    //echo $username . "<br><br>";
-    //mysqli_close($link);
 ?>
 </body>
 </html>

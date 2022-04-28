@@ -59,34 +59,36 @@
         }
 
         // Prepare an insert statement
-        $sql = "INSERT INTO fuel (gallons_requested, delivery_address, delivery_date, price , total) VALUES (?,?,?,?,?) ";
+        if (isset($_POST['submit'])) {
+            $sql = "INSERT INTO fuel (username, gallons_requested, delivery_address, delivery_date, price , total) VALUES (?,?,?,?,?,?) ";
+            
+            if ($stmt = mysqli_prepare($link, $sql)) {
 
-        if ($stmt = mysqli_prepare($link, $sql)) {
+            // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "ssssss", $param_username, $param_gallons_requested, $param_delivery_address, $param_delivery_date, $param_price, $param_total);
 
-        // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_gallons_requested, $param_delivery_address, $param_delivery_date, $param_price, $param_total);
+                // Set parameters
+                $param_username = $username;
+                $param_gallons_requested = trim($_POST["gallons_requested"]);
+                $param_delivery_address = trim($_POST["delivery_address"]);
+                $param_delivery_date = trim($_POST["delivery_date"]);
+                $param_price = trim($_POST['price']);
+                $param_total = trim($_POST['total']);
+                // Attempt to execute the prepared statement
+                if (mysqli_stmt_execute($stmt)) {
+                    // Redirect to welcome page
+                    header("location: welcome.php");
+                } else {
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
 
-            // Set parameters
-            $param_gallons_requested = trim($_POST["gallons_requested"]);
-            $param_delivery_address = trim($_POST["delivery_address"]);
-            $param_delivery_date = trim($_POST["delivery_date"]);
-            $param_price = trim($_POST["price"]);
-            $param_total = trim($_POST["total"]);
-
-            // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
-                // Redirect to welcome page
-                header("location: welcome.php");
-            } else {
-                echo "Oops! Something went wrong. Please try again later.";
+                // Close statement
+                mysqli_stmt_close($stmt);
             }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
+            // Close connection
+            mysqli_close($link);
         }
-
-        // Close connection
-        mysqli_close($link);
 }
 ?>
 
@@ -106,14 +108,13 @@
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById('price').innerHTML = this.responseText;
-                        document.getElementById('totalId').style.display = "none";
+                        document.getElementById('results').innerHTML = this.responseText;
+                        
                     }
                 };
                 xmlhttp.open("GET", "getquote.php?g="+G.value+"&d="+D.value+"&a="+A.value+"&u="+U, true);
                 xmlhttp.send();
             }
-            
         }
     </script>
     <style>
@@ -137,14 +138,18 @@
 
             <label for="delivery_address">Delivery Address:</label><br>
 			<textarea type="text" id="delivery_address" name="delivery_address" readonly><?php echo $delivery_address;?></textarea><br><br>
+            
+            <div id="results">
+                <label>Suggested Price:</label><br>
+                <span>$</span><input readonly>
+                <br><br>
+                
+                <label>Total Price:</label><br>
+                <span>$</span><input readonly>
+                <br><br>
+            </div>
   
-			<label for="price">Suggested Price:</label><br>
-			<span id="price" name="price" value="" readonly></span><br><br>
-			
-			<label for="total" id="totalId">Total Price:</label><br>
-			<br><br>
-  
-			<input type="submit" value="Submit">
+			<input type="submit" value="Submit" name="submit">
 		</form>
 	</center>
 </body>
