@@ -44,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 <html lang="en">
 <head>
-	<title> Homework 2~ </title>
+	<title> Profile Management </title>
 </head>
 <body>
 	<center>
@@ -121,7 +121,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   
 			<label for="zipcode">Zipcode:</label><br>
 			<input type="text" id="zipcode" name="zipcode" value="" minlength="5" maxlength="9" required><br><br>
-			<input type="submit" value="Submit">
+			<input type="submit" value="Submit"> <a href="welcome.php" class="btn btn-warning">Home</a>
 		</form>
 	</center>
 </body>
