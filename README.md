@@ -1,16 +1,15 @@
 # 4353Group21
 
-Test
 Answer these questions:
-1. Provide link to GitHub repository for TAs to view the code? (1 point)
-2. List what backend technologies you are using and why? (2 points)
+1. Provide link to GitHub repository for TAs to view the code. (5 points)
+2. Rerun the code coverage report. Code coverage must be above 80%. (2 points)
+3. Demo prior to project due date. (3 points)
+Completed at 12 on 5/4/22
 
-We are using XAMPP(MySql) to run our backend because it allows us to create and store all our information we need in databases fairly easily. 
-For our code coverage, we used PHPUnit, a test framework, and a [library](https://github.com/sebastianbergmann/php-code-coverage 
-) that allows for code coverage functionality. 
+4. IMPORTANT: list who did what within the group. TAs should be able to validate in GitHub, otherwise team members who didn't contribute will receive a ZERO.
 
 | Member | Contributions | Notes |
 |---|---|---|
-| Daniel Berreles Mendoza | Fuel Quote Page, Fuel Quote History Page | I updated my pages to include the backend code in PHP. Since the database will be required for the fuel quote history page, I will update the page when I can use the database.   |
-| Romaine Lewis | Login Page, Client Registration Page | I updated the visuals of the login and registration pages and also linked them to a database called logins that allows for user login and registration. |
-| Tyonne Zachery | Client Profile Management | Made additions to the Client Profile Management php page to add in “MySql” functionality for the future database. |
+| Romaine Lewis | Login/User Info/Database | Created the login/signup deliverables and helped integrate both the user and fuel database tables   |
+| Tyonne Zachery | Client Profile Management | Created the Client profile Management Page, then worked closely with Romaine to connect to the Database. |
+| Daniel Mendoza | Fuel Quote/Fuel Quote Table | Created the Fuel Quote/Fuel Quote Table and helped integrate the database tables |
