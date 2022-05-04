@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Check input errors before inserting in database
     // Prepare an insert statement
-    $sql = "UPDATE users SET name = ?, address1= ?, address2= ?, city= ?, state= ?, zipcode= ? WHERE id=1;" ;
+    $sql = "UPDATE users SET name = ?, address1= ?, address2= ?, city= ?, state= ?, zipcode= ? WHERE id=id;" ;
          
     if($stmt = mysqli_prepare($link, $sql)){
         
